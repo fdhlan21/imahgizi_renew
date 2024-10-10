@@ -294,52 +294,60 @@ export default function BadutaGizi({ navigation }) {
 
                    
                     <View style={{}}>
-                        <MyPickerSecond value={kirim.kelengkapan_imunisasi} onValueChange={(x) => {
-                            console.log("Kelengkapan Imunisasi : ", x)
-                            setKirim({...kirim, kelengkapan_imunisasi: x})
-                        }} data={[
-                            {label:'Lengkap', value:'Lengkap'},
-                            {label:'Tidak Lengkap', value:'Tidak Lengkap'}
-                        ]} label="Kelengkapan Imunisasi"/>
+                    <MyRadio 
+                        label="Kelengkapan Imunisasi"
+                        value={kirim.kelengkapan_imunisasi}
+                        options={[
+                            { label: 'Lengkap', value: 'Lengkap' },
+                            { label: 'Lengkap Tidak', value: 'Lengkap Tidak' }
+                        ]}
+                        onValueChange={(value) => setKirim({ ...kirim, kelengkapan_imunisasi: value })}
+                    />
                         
                     </View>
                    
                     <MyGap jarak={10} />
 
                     <View style={{}}>
-                        <MyPickerSecond value={kirim.kepemilikan_jamban_sehat} onValueChange={(x) => {
-                            console.log("Kepemilikan Jamban Sehat : ", x)
-                            setKirim({...kirim, kepemilikan_jamban_sehat: x})
-                        }} data={[
-                            {label:'Ya', value:'Ya'},
-                            {label:'Tidak', value:'Tidak'}
-                        ]} label="Kepemilikan Jamban Sehat"/>
+                    <MyRadio 
+                        label="Kepemilikan Jamban Sehat"
+                        value={kirim.kepemilikan_jamban_sehat}
+                        options={[
+                            { label: 'Ya', value: 'Ya' },
+                            { label: 'Tidak', value: 'Tidak' }
+                        ]}
+                        onValueChange={(value) => setKirim({ ...kirim, kepemilikan_jamban_sehat: value })}
+                    />
                         
                     </View>
                     <MyGap jarak={10} />
 
                   
                     <View style={{}}>
-                        <MyPickerSecond value={kirim.keluarga_perokok} onValueChange={(x) => {
-                            console.log("Apakah Terdapat Keluarga Perokok di dalam Rumah? : ", x)
-                            setKirim({...kirim, keluarga_perokok: x})
-                        }} data={[
-                            {label:'Ya', value:'Ya'},
-                            {label:'Tidak', value:'Tidak'}
-                        ]} label="Apakah Terdapat Keluarga Perokok di dalam Rumah?"/>
+                    <MyRadio 
+                        label="Apakah Terdapat Keluarga Perokok di dalam Rumah?"
+                        value={kirim.keluarga_perokok}
+                        options={[
+                            { label: 'Ya', value: 'Ya' },
+                            { label: 'Tidak', value: 'Tidak' }
+                        ]}
+                        onValueChange={(value) => setKirim({ ...kirim, keluarga_perokok: value })}
+                    />
                         
                     </View>
                     <MyGap jarak={10} />
 
                     {/* Radiobutton Kepemilikan JKN */}
                     <View style={{}}>
-                        <MyPickerSecond value={kirim.kepemilikan_jkn} onValueChange={(x) => {
-                            console.log("Kepemilikan JKN : ", x)
-                            setKirim({...kirim, kepemilikan_jkn: x})
-                        }} data={[
-                            {label:'Ya', value:'Ya'},
-                            {label:'Tidak', value:'Tidak'}
-                        ]} label="Kepemilikan JKN"/>
+                    <MyRadio 
+                        label="Kepemilikan JKN"
+                        value={kirim.kepemilikan_jkn}
+                        options={[
+                            { label: 'Ya', value: 'Ya' },
+                            { label: 'Tidak', value: 'Tidak' }
+                        ]}
+                        onValueChange={(value) => setKirim({ ...kirim, kepemilikan_jkn: value })}
+                    />
                         
                     </View>
                     <MyGap jarak={10} />

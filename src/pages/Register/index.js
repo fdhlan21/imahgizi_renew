@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ScrollView, Image, Alert } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, Image, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { ImageBackground } from 'react-native';
 import { Color, colors, fonts } from '../../utils';
@@ -8,6 +8,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { showMessage } from 'react-native-flash-message';
 import axios from 'axios';
 import { loginAPI, MYAPP, registerAPI, storeData } from '../../utils/localStorage';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function Register({ navigation }) {
     const [kirim, setKirim] = useState({
@@ -119,16 +120,16 @@ export default function Register({ navigation }) {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+        <ImageBackground source={require('../../assets/bgregister.png')} style={{
+            width:'100%',
+            height:'100%',
+            flex:1
+        }}>
+        <ScrollView>
             <ImageBackground source={require('../../assets/bgregister.png')} style={{ flex: 1, width: "100%", height: '100%' }}>
-                <ScrollView>
                     <View style={{ padding: 20 }}>
-                        {/* LOGO */}
-                        <View style={{ alignItems: "center", marginTop: 20 }}>
-                            <Image style={{ width: 97, height: 107 }} source={require('../../assets/logo.png')} />
-                        </View>
-
-                        <View style={{ padding: 10, marginTop: '12%' }}>
-                            <Text style={{ fontFamily: fonts.primary[700], color: colors.white, fontSize: 25, textAlign: 'center', }}>Daftar</Text>
+                        <View style={{ padding: 10, marginTop: '50%' }}>
+                            <Text style={{ fontFamily: fonts.primary[700], color: colors.white, fontSize: 25, textAlign: 'center' }}>Daftar</Text>
 
                             <View style={{ marginTop: 30 }}>
                                 <MyInput
@@ -154,14 +155,15 @@ export default function Register({ navigation }) {
                                     value={kirim.alamat}
                                     onValueChange={(x) => setKirim({ ...kirim, alamat: x })}
                                     label="Alamat Lengkap"
-                                    data={dataAlamat} // Mengirim data alamat ke MyPicker
+                                    data={dataAlamat} 
                                 />
                                 <MyGap jarak={10} />
                                 <MyInput
                                     value={kirim.password}
                                     onChangeText={(x) => setKirim({ ...kirim, password: x })}
                                     label="Kata Sandi"
-                                    placeholder="Kata Sandi" />
+                                    placeholder="Kata Sandi"
+                                    secureTextEntry={true} />
                                 <MyGap jarak={10} />
 
                                 {/* TOMBOL DAFTAR */}
@@ -181,31 +183,33 @@ export default function Register({ navigation }) {
                                             }}>Daftar</Text>
                                         </View>
                                     </TouchableWithoutFeedback>
+
+                                    <View style={{
+                    marginTop:20
+                   }}>
+                    <TouchableWithoutFeedback onPress={() => navigation.navigate("Login")}>
+                        <View>
+                        <Text style={{
+                        fontFamily:fonts.primary[600],
+                        fontSize:15, 
+                        textAlign:'center',
+                        color:colors.white,
+
+                    }}>Sudah memiliki akun? Silakan <Text style={{
+                        fontFamily:fonts.primary[700]
+                    }}>Masuk</Text></Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                   </View>
                                 </View>
                                 {/* END TOMBOL DAFTAR */}
-
-                                {/* TOMBOL BELUM PUNYA AKUN */}
-                                <View style={{ padding: 10 }}>
-                                    <View style={{ marginTop: 60 }}>
-                                        <TouchableWithoutFeedback>
-                                            <View>
-                                                <Text style={{
-                                                    fontFamily: fonts.primary[600],
-                                                    fontSize: 15,
-                                                    textAlign: 'center',
-                                                    color: colors.white,
-                                                }}>Belum memiliki akun? Silakan <Text style={{
-                                                    fontFamily: fonts.primary[700]
-                                                }}>Daftar</Text></Text>
-                                            </View>
-                                        </TouchableWithoutFeedback>
-                                    </View>
-                                </View>
                             </View>
                         </View>
                     </View>
-                </ScrollView>
             </ImageBackground>
+                </ScrollView>
+        </ImageBackground>
+            
         </SafeAreaView>
-    )
+    );
 }

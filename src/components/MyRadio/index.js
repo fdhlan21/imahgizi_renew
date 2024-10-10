@@ -1,46 +1,44 @@
 import React from 'react';
-import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native';
-import { colors, fonts, MyDimensi } from '../../utils';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { colors, fonts } from '../../utils';
 
-export default function MyRadio({ label, selected, onPress }) {
+const MyRadio = ({ label, value, options, onValueChange }) => {
     return (
-        <TouchableWithoutFeedback onPress={onPress}>
-            <View style={styles.container}>
-                <View style={styles.radioButton}>
-                    {selected && <View style={styles.radioButtonSelected} />}
-                </View>
-                <Text style={styles.radioLabel}>{label}</Text>
+        <View style={{ marginVertical: 10 }}>
+            <Text style={{ fontFamily: fonts.primary[600], color: colors.primary, marginBottom: 5, fontSize:15}}>{label}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {options.map(option => (
+                    <TouchableOpacity
+                        key={option.value}
+                        style={{ flexDirection: 'row', alignItems: 'center', marginRight: 20 }}
+                        onPress={() => onValueChange(option.value)}
+                    >
+                        <View style={{
+                            width: 20,
+                            height: 20,
+                            borderRadius: 10,
+                            borderWidth: 2,
+                            borderColor: colors.primary,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: 10,
+                            marginTop:10
+                        }}>
+                            {value === option.value && (
+                                <View style={{
+                                    width: 12,
+                                    height: 12,
+                                    borderRadius: 6,
+                                    backgroundColor: colors.primary,
+                                }} />
+                            )}
+                        </View>
+                        <Text style={{ fontFamily: fonts.primary[500], color: colors.black }}>{option.label}</Text>
+                    </TouchableOpacity>
+                ))}
             </View>
-        </TouchableWithoutFeedback>
+        </View>
     );
-}
+};
 
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 10,
-    },
-    radioButton: {
-        width: 24,   // Ukuran lingkaran besar
-        height: 24,
-        backgroundColor: colors.white,
-        borderRadius: 5,  // Membuat lingkaran
-        borderColor: colors.primary,  // Warna border
-        borderWidth: 2,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    radioButtonSelected: {
-        width: 12,   // Ukuran lingkaran kecil di dalamnya
-        height: 12,
-        backgroundColor: colors.primary,  // Warna lingkaran kecil saat dipilih
-        borderRadius: 6,  // Membuat lingkaran kecil
-    },
-    radioLabel: {
-        marginLeft: 15,  // Jarak antara radio button dan teks
-        fontSize: MyDimensi / 4,
-        fontFamily: fonts.secondary[600],
-        color: colors.primary,
-    },
-});
+export default MyRadio;

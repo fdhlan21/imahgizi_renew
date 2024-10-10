@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ScrollView, Image, Alert } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, Image, Alert, Linking, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { ImageBackground } from 'react-native'
 import { Color, colors, fonts } from '../../utils'
@@ -15,6 +15,18 @@ export default function Login ({navigation}) {
         password:'',
 
     })
+
+    const handleWA = async () => {
+        const phoneNumber = '6285155153923';
+        const message = 'Hello, saya ingin ganti password.';  // Definisikan message di sini
+        const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      
+        Linking.openURL(url).catch(() => {
+          Alert.alert("MyApp", "ERROR, GAGAL MEMBUKA WA");
+        });
+      };
+      
+      
 
     const handleLogin = () => {
    
@@ -63,31 +75,28 @@ export default function Login ({navigation}) {
     <SafeAreaView style={{
         flex:1,
     }}>
+
+    <ImageBackground source={require('../../assets/bglogin.png')} style={{
+        width:"100%",
+        height:"100%",
+        flex:1,
+    }}>
+
+<ScrollView>
         <ImageBackground source={require('../../assets/bglogin.png')} style={{
             flex:1,
             width:"100%",
             height:'100%',
 
         }}> 
-
-        <ScrollView>
             <View style={{
                 padding:20,
 
             }}>
 
-{/* LOGO */}
-            <View style={{
-            alignItems:"center",
-            marginTop:10
-            }}>
-                <Image style={{
-                    width:198,
-                    height:227
-                }} source={require('../../assets/logo.png')}/>
-            </View>
 
-             <View style={{padding:10, marginTop:'20%'}}>
+
+             <View style={{padding:10, marginTop:'100%'}}>
              <Text style={{fontFamily:fonts.primary[700], color:colors.white,
                 fontSize:25, textAlign:'center', }}>Masuk</Text>
 
@@ -97,7 +106,7 @@ export default function Login ({navigation}) {
                     <MyGap jarak={10}/>
                     <MyInput  value={kirim.password} onChangeText={(x) => setKirim({...kirim, password: x})} label="Kata Sandi" placeholder="Isi Kata Sandi" secureTextEntry={true}/>
                     <MyGap jarak={10}/>
-                   <TouchableWithoutFeedback>
+                   <TouchableOpacity onPress={handleWA}>
                     <View style={{flexDirection:"row", justifyContent:"flex-end"}}>
                     <Text style={{
                         fontFamily:fonts.primary[500],
@@ -105,7 +114,7 @@ export default function Login ({navigation}) {
                         
                     }}>Lupa Kata Sandi</Text>
                     </View>
-                   </TouchableWithoutFeedback>
+                   </TouchableOpacity>
 
 
                    {/* TOMBOL LOGIN */}
@@ -160,11 +169,12 @@ export default function Login ({navigation}) {
              </View>
 
             </View>
+            </ImageBackground>
         </ScrollView>
+    </ImageBackground>
 
-   
-
-        </ImageBackground>
+       
+       
     </SafeAreaView>
   )
 }
