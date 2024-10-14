@@ -7,14 +7,20 @@ import { MyGap, MyInput } from '../../components'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { showMessage } from 'react-native-flash-message'
 import axios from 'axios'
-import { loginAPI, MYAPP, storeData } from '../../utils/localStorage'
+import { api_token, apiURL, MYAPP, storeData } from '../../utils/localStorage'
+import MyLoading from '../../components/MyLoading'
+
 
 export default function Login ({navigation}) {
     const [kirim, setKirim] = useState({
+        api_token: api_token,
         username:'',
         password:'',
 
+        
     })
+
+    const [loading, setLoading] = useState(false); // Tambahkan state loading
 
     const handleWA = async () => {
         const phoneNumber = '6285155153923';
@@ -46,10 +52,13 @@ export default function Login ({navigation}) {
             })
         } else {
             console.log(kirim);
+            setLoading(true)
+            
 
             axios
-            .post(loginAPI, kirim)
+            .post(apiURL + 'login', kirim)
             .then(response => {
+                setLoading(true)
                 console.log(response.data);
                  if (response.data.status == 200) {
                     console.log(response.data)
@@ -57,6 +66,7 @@ export default function Login ({navigation}) {
                     navigation.replace("MainApp");
                     Alert.alert(MYAPP, "Login berhasil!");
                  } else {
+                    setLoading(false);
                     showMessage({
                         type:'default',
                         color:'white',
@@ -65,7 +75,9 @@ export default function Login ({navigation}) {
                     })
                  }
             })
+    
             .catch(error => {
+                setLoading(false)
                 console.error(error)
             })
         }
@@ -75,6 +87,8 @@ export default function Login ({navigation}) {
     <SafeAreaView style={{
         flex:1,
     }}>
+
+{loading && <MyLoading />}
 
     <ImageBackground source={require('../../assets/bglogin.png')} style={{
         width:"100%",

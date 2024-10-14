@@ -16,12 +16,12 @@ import kecamatanDesa from '../../components/Kecamatan/kecamatan.json';
 import { useIsFocused } from '@react-navigation/native';
 
 export default function AccountEdit({ navigation, route }) {
-    const { nama_lengkap, username, nomor_wa } = route.params;
+    const { nama_lengkap, username, telepon } = route.params;
 
     const [kirim, setKirim] = useState({
         nama_lengkap: nama_lengkap || '',
         username: username || '',
-        nomor_wa: nomor_wa || '',
+        nomor_wa: telepon || '',
         alamat: '', 
         password: '', 
     });
@@ -38,7 +38,7 @@ export default function AccountEdit({ navigation, route }) {
                         id: res.data.id, // Pastikan id pengguna ditambahkan
                         nama_lengkap: res.data.nama_lengkap,
                         username: res.data.username,
-                        nomor_wa: res.data.nomor_wa,
+                        nomor_wa: res.data.telepon,
                         alamat: res.data.alamat,
                         password: '',  // Password akan tetap kosong jika tidak diubah
                     });
@@ -121,10 +121,11 @@ export default function AccountEdit({ navigation, route }) {
                     />
                     <MyGap jarak={10} />
                     <MyInputSecond
-                        label="Nomor WhatsApp"
-                        value={kirim.nomor_wa}
-                        onChangeText={(x) => setKirim({ ...kirim, nomor_wa: x })}
-                    />
+    label="Nomor WhatsApp"
+    value={kirim.nomor_wa} // Menggunakan kirim.nomor_wa
+    onChangeText={(x) => setKirim({ ...kirim, nomor_wa: x })}
+/>
+
                     <MyGap jarak={10} />
                     
                     <MyPicker

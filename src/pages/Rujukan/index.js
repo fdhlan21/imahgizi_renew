@@ -7,7 +7,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import MyPickerSecond from '../../components/MyPickerSecond'
 import MyLoading from '../../components/MyLoading'
 import { useRoute } from '@react-navigation/native'
-import { MYAPP, rujukanAPI } from '../../utils/localStorage'
+import { MYAPP, apiURL } from '../../utils/localStorage'
 import { showMessage } from 'react-native-flash-message'
 import axios from 'axios'
 
@@ -72,7 +72,7 @@ export default function Rujukan({navigation}) {
     console.log("Data yang dikirim:", dataToSend);
     setLoading(true)
     axios
-      .post(rujukanAPI, dataToSend)
+    .post(apiURL + 'rujukan', dataToSend)
       .then(response => {
         setLoading(false);
         console.log(response.data)

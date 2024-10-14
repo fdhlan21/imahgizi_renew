@@ -7,7 +7,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { useRoute } from '@react-navigation/native'
 import { showMessage } from 'react-native-flash-message'
 import axios from 'axios'
-import { konselingAPI, MYAPP } from '../../utils/localStorage'
+import { apiURL, MYAPP } from '../../utils/localStorage'
 import MyLoading from '../../components/MyLoading'
 
 
@@ -64,7 +64,7 @@ export default function Konseling({ navigation }) {
     setLoading(true);
 
     axios
-      .post(konselingAPI, dataToSend)
+    .post(apiURL + 'konseling', dataToSend)
       .then(response => {
         setLoading(false)
         console.log(response.data);

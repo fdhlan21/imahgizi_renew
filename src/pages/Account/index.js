@@ -76,7 +76,7 @@ export default function Profile({ navigation }) {
 
                     <Text style={styles.label}>Nomor WhatsApp</Text>
                     <View style={styles.inputBox}>
-                        <Text style={styles.value}>{user.nomor_wa}</Text>
+                        <Text style={styles.value}>{user.telepon}</Text>
                     </View>
 
                     <Text style={styles.label}>Alamat Lengkap</Text>

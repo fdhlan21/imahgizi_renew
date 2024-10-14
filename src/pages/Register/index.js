@@ -7,11 +7,14 @@ import { MyGap, MyInput, MyPicker } from '../../components';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { showMessage } from 'react-native-flash-message';
 import axios from 'axios';
-import { loginAPI, MYAPP, registerAPI, storeData } from '../../utils/localStorage';
+import { api_token, apiURL, MYAPP, registerAPI, storeData } from '../../utils/localStorage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import MyLoading from '../../components/MyLoading';
+
 
 export default function Register({ navigation }) {
     const [kirim, setKirim] = useState({
+        api_token: api_token,
         nama_lengkap: '',
         username: '',
         nomor_wa: '',
@@ -21,6 +24,7 @@ export default function Register({ navigation }) {
 
     // Mengambil data dari JSON
     const [dataAlamat, setDataAlamat] = useState([]);
+    const [loading, setLoading] = useState(false); // Tambahkan state loading
 
     useEffect(() => {
         const formattedData = kecamatanDesa.map(item => ({
@@ -83,15 +87,18 @@ export default function Register({ navigation }) {
     };
 
     const handleRegisterAPI = () => {
+        setLoading(true)
         axios
-            .post(registerAPI, kirim)
+        .post(apiURL + '/register', kirim)
             .then(response => {
+                setLoading(false)
                 if (response.data.status === 200) {
                     console.log(response.data);
                     storeData('user', kirim);
                     navigation.replace("Login");
                     Alert.alert(MYAPP, "Selamat!, Anda berhasil daftar!");
                 } else if (response.data.status === 404) {
+                    setLoading(false);
                     showMessage({
                         type: 'default',
                         color: 'white',
@@ -99,6 +106,7 @@ export default function Register({ navigation }) {
                         message: "Sudah ada akun"
                     });
                 } else {
+                    setLoading(false);
                     showMessage({
                         type: 'default',
                         color: 'white',
@@ -108,6 +116,7 @@ export default function Register({ navigation }) {
                 }
             })
             .catch(error => {
+                setLoading(false)
                 console.error("Terjadi kesalahan dari server!", error);
                 showMessage({
                     type: "default",
@@ -125,6 +134,7 @@ export default function Register({ navigation }) {
             height:'100%',
             flex:1
         }}>
+         {loading && <MyLoading />}
         <ScrollView>
             <ImageBackground source={require('../../assets/bgregister.png')} style={{ flex: 1, width: "100%", height: '100%' }}>
                     <View style={{ padding: 20 }}>

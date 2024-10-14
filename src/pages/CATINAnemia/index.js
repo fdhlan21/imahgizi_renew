@@ -5,7 +5,7 @@ import { MyCalendar, MyGap, MyHeader, MyInputSecond, MyRadio } from '../../compo
 import MyPickerSecond from '../../components/MyPickerSecond';
 import kecamatanDesa from '../../components/Kecamatan/kecamatan.json';
 import axios from 'axios';
-import { catinKEKAnemiaAPI, ibuhamilkekAPI, MYAPP } from '../../utils/localStorage';
+import { apiURL, ibuhamilkekAPI, MYAPP } from '../../utils/localStorage';
 import { Alert } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import MyLoading from '../../components/MyLoading';
@@ -61,9 +61,9 @@ export default function CATINAnemia({ navigation }) {
         setKirim((prevState) => ({    
             ...prevState,
            
-            kepemilikan_jamban_sehat: 'Ya',  // Nilai default pertama untuk Kepemilikan Jamban Sehat
-            keluarga_perokok: 'Ya',          // Nilai default pertama untuk Keluarga Perokok
-            kepemilikan_jkn: 'Ya'            // Nilai default pertama untuk Kepemilikan JKN
+            kepemilikan_jamban_sehat: '',  // Nilai default pertama untuk Kepemilikan Jamban Sehat
+            keluarga_perokok: '',          // Nilai default pertama untuk Keluarga Perokok
+            kepemilikan_jkn: ''            // Nilai default pertama untuk Kepemilikan JKN
         }));
     }, []);
     
@@ -144,7 +144,7 @@ export default function CATINAnemia({ navigation }) {
         console.log("Data yang dikirim:", dataToSend);
         setLoading(true)
     
-        axios.post(catinKEKAnemiaAPI, dataToSend)
+        axios.post(apiURL + 'catikekanemia', dataToSend)
             .then(response => {
                 console.log('Respons dari server:', response);
                 if (response.data.status === 200) {

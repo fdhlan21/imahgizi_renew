@@ -5,7 +5,7 @@ import { MyCalendar, MyGap, MyHeader, MyInputSecond, MyRadio } from '../../compo
 import MyPickerSecond from '../../components/MyPickerSecond';
 import kecamatanDesa from '../../components/Kecamatan/kecamatan.json';
 import axios from 'axios';
-import { ibuhamilanemiaAPI, MYAPP } from '../../utils/localStorage'; // Menggunakan API Ibu Hamil Anemia
+import { apiURL, MYAPP } from '../../utils/localStorage'; // Menggunakan API Ibu Hamil Anemia
 import { Alert } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import MyLoading from '../../components/MyLoading';
@@ -55,9 +55,9 @@ export default function IbuHamilAnemia({ navigation }) {
         setKirim((prevState) => ({    
             ...prevState,
            
-            kepemilikan_jamban_sehat: 'Ya',  // Nilai default pertama untuk Kepemilikan Jamban Sehat
-            keluarga_perokok: 'Ya',          // Nilai default pertama untuk Keluarga Perokok
-            kepemilikan_jkn: 'Ya'            // Nilai default pertama untuk Kepemilikan JKN
+            kepemilikan_jamban_sehat: '',  // Nilai default pertama untuk Kepemilikan Jamban Sehat
+            keluarga_perokok: '',          // Nilai default pertama untuk Keluarga Perokok
+            kepemilikan_jkn: ''            // Nilai default pertama untuk Kepemilikan JKN
         }));
     }, []);
     
@@ -93,6 +93,10 @@ export default function IbuHamilAnemia({ navigation }) {
             { field: kirim.usiakehamilan, message: "Mohon isi Usia Kehamilan!" },
             { field: kirim.hasilpengukuranhb, message: "Mohon isi Hasil Pengukuran HB!" },  
             { field: kirim.pendata, message: "Mohon isi Pendata!" },
+            { field: kirim.keluarga_perokok, message: "Mohon pilih Apakah Terdapat Keluarga Perokok di dalam Rumah?" },
+            { field: kirim.kepemilikan_jamban_sehat, message: "Mohon pilih Kepemilikan Jamban Sehat!" },
+            { field: kirim.kepemilikan_jkn, message: "Mohon pilih Kepemilikan JKN!" },
+
             
         ];
     
@@ -132,7 +136,7 @@ export default function IbuHamilAnemia({ navigation }) {
         setLoading(true)
     
         // Kirim request dengan axios
-        axios.post(ibuhamilanemiaAPI, dataToSend)
+        axios.post(apiURL + 'ibuhamilanemia', dataToSend)
             .then(response => {
                 setLoading(false)
                 console.log('Respons dari server:', response);

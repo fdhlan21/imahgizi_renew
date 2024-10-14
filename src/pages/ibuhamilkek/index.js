@@ -5,7 +5,7 @@ import { MyCalendar, MyGap, MyHeader, MyInputSecond, MyRadio } from '../../compo
 import MyPickerSecond from '../../components/MyPickerSecond';
 import kecamatanDesa from '../../components/Kecamatan/kecamatan.json';
 import axios from 'axios';
-import { ibuhamilkekAPI, MYAPP } from '../../utils/localStorage';
+import { apiURL, MYAPP } from '../../utils/localStorage';
 import { Alert } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import MyLoading from '../../components/MyLoading';
@@ -58,9 +58,9 @@ export default function IbuHamilKEK({ navigation }) {
         setKirim((prevState) => ({    
             ...prevState,
            
-            kepemilikan_jamban_sehat: 'Ya',  // Nilai default pertama untuk Kepemilikan Jamban Sehat
-            keluarga_perokok: 'Ya',          // Nilai default pertama untuk Keluarga Perokok
-            kepemilikan_jkn: 'Ya'            // Nilai default pertama untuk Kepemilikan JKN
+            kepemilikan_jamban_sehat: '',  // Nilai default pertama untuk Kepemilikan Jamban Sehat
+            keluarga_perokok: '',          // Nilai default pertama untuk Keluarga Perokok
+            kepemilikan_jkn: ''            // Nilai default pertama untuk Kepemilikan JKN
         }));
     }, []);
 
@@ -96,7 +96,10 @@ export default function IbuHamilKEK({ navigation }) {
             { field: kirim.usiaibu, message: "Mohon isi Usia Ibu!" },
             { field: kirim.usiakehamilan, message: "Mohon isi Usia Kehamilan!" },
             { field: kirim.hasilpengukuranlila, message: "Mohon isi Hasil Pengukuran LILA!" },
-            { field: kirim.pendata, message: "Mohon isi Pendata!" },
+            { field: kirim.keluarga_perokok, message: "Mohon pilih Apakah Terdapat Keluarga Perokok di dalam Rumah?" },
+            { field: kirim.kepemilikan_jamban_sehat, message: "Mohon pilih Kepemilikan Jamban Sehat!" },
+            { field: kirim.kepemilikan_jkn, message: "Mohon pilih Kepemilikan JKN!" },
+
            
         ];
     
@@ -138,7 +141,7 @@ export default function IbuHamilKEK({ navigation }) {
         console.log("Data yang dikirim:", dataToSend);
         setLoading(true)
     
-        axios.post(ibuhamilkekAPI, dataToSend)
+        axios.post(apiURL + 'ibuhamilkek', dataToSend)
             .then(response => {
                 setLoading(false)
                 console.log('Respons dari server:', response);

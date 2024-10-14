@@ -7,7 +7,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useRoute } from '@react-navigation/native';
 import { showMessage } from 'react-native-flash-message';
 import axios from 'axios';
-import { bantuanSosialAPI, MYAPP } from '../../utils/localStorage';
+import { apiURL, MYAPP } from '../../utils/localStorage';
 import MyLoading from '../../components/MyLoading';
 
 export default function BantuanSosial({ navigation }) {
@@ -65,7 +65,7 @@ export default function BantuanSosial({ navigation }) {
     setLoading(true)
 
     axios
-      .post(bantuanSosialAPI, dataToSend)
+    .post(apiURL + 'bantuansosial', dataToSend)
       .then(response => {
         setLoading(false)
         console.log(response.data);
