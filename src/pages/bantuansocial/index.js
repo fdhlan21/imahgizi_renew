@@ -71,7 +71,12 @@ export default function BantuanSosial({ navigation }) {
         console.log(response.data);
         if (response.data.status === 200) {
           Alert.alert(MYAPP, "Data berhasil disimpan!");
-          navigation.replace("MainApp"); // Navigasi ke halaman utama setelah data disimpan
+          navigation.replace("Laporan", {
+            nik: nik,  // Pastikan dikirimkan saat kembali ke Laporan
+            namaibu: namaIbu,
+            namabayi: namaBayi,
+            kelompok_resiko: kelompokResiko
+          });
         } else {
           showMessage({
             message: "Gagal menyimpan data, coba lagi!",

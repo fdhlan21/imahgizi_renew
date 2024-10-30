@@ -79,7 +79,12 @@ export default function Rujukan({navigation}) {
         if (response.data.status === 200) {
           console.log(response.data)
           Alert.alert(MYAPP, "Data berhasil disimpan!");
-          navigation.replace("MainApp");
+          navigation.replace("Laporan", {
+            nik: nik,
+            namaibu: namaIbu,
+            namabayi: namaBayi,
+            kelompok_resiko: kelompokResiko
+          });
         } else {
           showMessage({
             message: "Gagal menyimpan data, coba lagi!",

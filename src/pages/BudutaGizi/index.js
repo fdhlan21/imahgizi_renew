@@ -257,8 +257,8 @@ export default function BadutaGizi({ navigation }) {
                         onChangeText={(x) => setKirim({ ...kirim, usiaanak: x })} 
                         placeholder="Isi Usia Anak"  
                         label="Usia Anak" 
-          
                         keyboardType="numeric" 
+                        rightLabel="Bulan"
                     />
                     <MyGap jarak={10} />
 
